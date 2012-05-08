@@ -3,7 +3,7 @@
 import sys
 from optparse import OptionParser
 from ConfigParser import SafeConfigParser
-import signal
+
 import gevent
 from gevent.server import StreamServer
 from gevent.socket import create_connection, gethostbyname
