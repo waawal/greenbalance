@@ -13,7 +13,7 @@ setup(
                   ('/etc', ['greenbalance.conf']),],
     name = 'greenbalance',
     version = '0.0.2',
-    url = 'https://github.com/waawal/green-balance',
+    url = 'https://github.com/waawal/greenbalance',
     description = 'Weighted Random Loadbalancer for TCP.',
     long_description = long_description,
     author = 'Daniel Waardal',

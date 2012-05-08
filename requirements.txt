@@ -1,0 +1,4 @@
+# These requirements are for DEVELOPMENT ONLY!
+
+# Documentation generation
+Sphinx >= 0.6
