@@ -5,27 +5,36 @@
 greenbalance
 =============
 
-*greenbalance is a TCP loadbalancer built with gevent and wr*
+*greenbalance is a TCP loadbalancer with round-robin and weighted random support built on gevent and wr*
 
+``greenbalance.conf`` is by default installed to ``/etc/greenbalance.conf``
 
+Usage
+-----
+::
+
+    $ greenbalance --port 8080 --config /path/to/my.config
 
 Example greenbalance.conf
 -------------------------
 ::
 
     [settings]
-    host = 0.0.0.0
-    port = 3001
+    host = 0.0.0.0           # Bind to this (0.0.0.0 = all)
+    port = 3001              # Listening port.
 
     [nodes]
-    localhost 3101 = 20
-    localhost 3102 = 40
-    localhost 3102 = 40
+    backend1 3101 = 20       # will serve 20% of the requests.
+    192.168.100.7 3102 = 40  # will serve 40% of the requests.
+    localhost 3103 = 40      # will serve 40% of the requests.
 
 Installation
------------------------------
+------------
 
-Install greenbalance with ``pip install greenbalance``
+* Ubuntu: ``sudo apt-get install python-pip python-gevent; sudo pip install --upgrade pip``
+
+Install greenbalance with ``sudo pip install greenbalance``  
+*sudo is needed because the configuration file will be written to /etc*
 
 License
 -------

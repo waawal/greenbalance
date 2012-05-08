@@ -1,7 +1,9 @@
 #!/usr/bin/python
 
+import os
 from distutils.core import setup
 
+homedir = os.path.expanduser('~')
 
 with open('README.rst') as file:
     long_description = file.read()
@@ -9,8 +11,8 @@ with open('README.rst') as file:
 setup(
     data_files = [('', ['README.rst']),
                   ('/etc', ['greenbalance.conf']),],
-    name = 'green-balance',
-    version = '0.1.0',
+    name = 'greenbalance',
+    version = '0.0.1',
     url = 'https://github.com/waawal/green-balance',
     description = 'Weighted Random Loadbalancer for TCP.',
     long_description = long_description,
