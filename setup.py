@@ -12,7 +12,7 @@ setup(
     data_files = [('', ['README.rst']),
                   ('/etc', ['greenbalance.conf']),],
     name = 'greenbalance',
-    version = '0.0.1',
+    version = '0.0.2',
     url = 'https://github.com/waawal/green-balance',
     description = 'Weighted Random Loadbalancer for TCP.',
     long_description = long_description,
@@ -24,7 +24,7 @@ setup(
     py_modules = [
         'greenbalance'
     ],
-    requires = [
+    install_requires = [
         'wr',
         'gevent'
     ],
