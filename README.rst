@@ -1,6 +1,6 @@
-.. image:: http://farm7.staticflickr.com/6193/6049536620_7668b16abf_z.jpg
-    :alt: http://www.flickr.com/photos/fincher69/6049536620/
-    :target: http://pypi.python.org/pypi/green-balance
+.. image:: http://farm4.staticflickr.com/3043/2343360380_fdbd835cff_t.jpg
+    :alt: http://www.flickr.com/photos/gorupka/2343360380/
+    :target: http://www.flickr.com/photos/gorupka/2343360380/
 
 greenbalance
 =============
