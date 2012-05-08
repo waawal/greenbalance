@@ -8,8 +8,6 @@ greenbalance
 
 *greenbalance is a TCP loadbalancer with round-robin and weighted random support built on* ``gevent`` *and* ``wr``
 
-``greenbalance.conf`` is by default installed to ``/etc/greenbalance.conf``
-
 Usage
 -----
 
@@ -34,6 +32,9 @@ Get all commandline options by:
 
 Example greenbalance.conf
 -------------------------
+
+``greenbalance.conf`` is by default installed to ``/etc/greenbalance.conf``
+
 ::
 
     [settings]
