@@ -7,16 +7,18 @@ with open('README.rst') as file:
     long_description = file.read()
 
 setup(
-    data_files = [('', ['README.rst'])],
+    data_files = [('', ['README.rst']),
+                  ('/etc', ['greenbalance.conf']),],
     name = 'green-balance',
     version = '0.1.0',
     url = 'https://github.com/waawal/green-balance',
-    description = 'Weighted Random TCP Loadbalancer.',
+    description = 'Weighted Random Loadbalancer for TCP.',
     long_description = long_description,
     author = 'Daniel Waardal',
     author_email = 'waawal@boom.ws',
     license = 'gpl',
     platforms = 'any',
+    scripts=['bin/greenbalance'],
     py_modules = [
         'greenbalance'
     ],

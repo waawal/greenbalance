@@ -66,7 +66,7 @@ def read_config(host=None, port=None, conf=None):
     
     return destinationsdict, (host, port)
 
-def main(host=None, port=None, conf=None):
+def start(host=None, port=None, conf=None):
     nodes, source = read_config(host, port, conf)
     server = PortForwarder(source, nodes)
     gevent.signal(signal.SIGTERM, server.close)
@@ -74,7 +74,7 @@ def main(host=None, port=None, conf=None):
     gevent.signal(signal.SIGINT, server.close)
     server.serve_forever()
 
-if __name__ == '__main__':
+def main(argv):
     p = OptionParser(usage="usage: %prog [options] filename",
                           version="%prog 0.1.0")
     p.add_option("-H", "--host",
@@ -87,8 +87,10 @@ if __name__ == '__main__':
                  help="Listening Port",)
     p.add_option("-c", "--config",
                  dest="conf",
-                 default="greenbalance.conf",
+                 default="/etc/greenbalance.conf",
                  help="Configuration file",)
     options, arguments = p.parse_args()
-    main(options.host, options.port, options.conf)
+    start(options.host, options.port, options.conf)
 
+if __name__ == '__main__':
+    main(sys.argv)
