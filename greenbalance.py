@@ -1,12 +1,14 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 
 import sys
+import signal
 from optparse import OptionParser
 from ConfigParser import SafeConfigParser
 
 import gevent
 from gevent.server import StreamServer
 from gevent.socket import create_connection, gethostbyname
+
 import wr
 
 
