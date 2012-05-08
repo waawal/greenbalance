@@ -12,7 +12,7 @@ setup(
     data_files = [('', ['README.rst']),
                   ('/etc', ['greenbalance.conf']),],
     name = 'greenbalance',
-    version = '0.0.2',
+    version = '0.0.3',
     url = 'https://github.com/waawal/greenbalance',
     description = 'Weighted Random Loadbalancer for TCP.',
     long_description = long_description,

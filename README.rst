@@ -37,6 +37,11 @@ Installation
 Install greenbalance with ``sudo pip install greenbalance``  
 *sudo is needed because the configuration file will be written to /etc*
 
+Documentation
+-------------
+
+Documentation is available at `readthedocs.org <http://greenbalance.readthedocs.org/>`_
+
 License
 -------
 `GPL <http://www.gnu.org/licenses/gpl-3.0.txt>`_
