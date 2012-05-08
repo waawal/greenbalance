@@ -50,7 +50,7 @@ Installation
 ------------
 
 * **Ubuntu:** ``sudo apt-get install python-pip python-gevent; sudo pip install --upgrade pip``
-* **CentOS:** Install ``python-pip`` from ``epel``.
+* **CentOS:** Install ``python-pip`` and ``python-gevent`` from ``epel``.
 
 Install greenbalance with ``sudo pip install greenbalance``  
 *sudo is needed because the configuration file will be written to /etc*
