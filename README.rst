@@ -1,5 +1,6 @@
-.. image:: http://farm4.staticflickr.com/3043/2343360380_fdbd835cff_t.jpg
+.. image:: http://farm4.staticflickr.com/3043/2343360380_fdbd835cff_m.jpg
     :alt: http://www.flickr.com/photos/gorupka/2343360380/
+    :align: right
     :target: http://www.flickr.com/photos/gorupka/2343360380/
 
 greenbalance
