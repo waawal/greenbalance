@@ -85,7 +85,7 @@ if __name__ == '__main__':
                  help="Listening Port",)
     p.add_option("-c", "--config",
                  dest="conf",
-                 default="green-balance.ini",
+                 default="greenbalance.conf",
                  help="Configuration file",)
     options, arguments = p.parse_args()
     main(options.host, options.port, options.conf)
