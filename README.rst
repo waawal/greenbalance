@@ -6,7 +6,7 @@
 greenbalance
 =============
 
-*greenbalance is a simple TCP loadbalancer with round-robin and weighted random support built on* ``gevent`` *and* ``wr``*.*
+*greenbalance is a simple TCP loadbalancer with round-robin and weighted random support built on* ``gevent`` *and* ``wr``.
 
 Usage
 -----
