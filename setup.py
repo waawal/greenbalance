@@ -14,7 +14,7 @@ setup(
     name = 'greenbalance',
     version = '0.0.3',
     url = 'https://github.com/waawal/greenbalance',
-    description = 'Weighted Random Loadbalancer for TCP.',
+    description = 'Weighted Random Load Balancer for TCP.',
     long_description = long_description,
     author = 'Daniel Waardal',
     author_email = 'waawal@boom.ws',

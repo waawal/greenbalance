@@ -6,12 +6,12 @@
 greenbalance
 =============
 
-*greenbalance is a simple TCP loadbalancer with round-robin and weighted random support built on* ``gevent`` *and* ``wr``.
+*greenbalance is a simple TCP load balancer with round-robin and weighted random support built on* ``gevent`` *and* ``wr``.
 
 Usage
 -----
 
-Simple example; this will make the loadbalancer listen on port 8080 and use a custom configuration.
+Simple example; this will make the load balancer listen on port 8080 and use a custom configuration.
 ::
 
     $ greenbalance --port 8080 --config /path/to/my.config
