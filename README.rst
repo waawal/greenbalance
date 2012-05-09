@@ -18,17 +18,18 @@ Simple example; this will make the load balancer listen on port 8080 and use a c
 
 Arguments
 ---------
+Arguments accepted by the ``greenbalance`` command.
 
 --version
-  Show program's version number and exit
+  Show program's version number and exit.
 -h, --help
-  Show this help message and exit
--H HOST, --host=HOST
-  IP or Hostname
--p PORT, --port=PORT
-  Listening Port
--c CONF, --config=CONF
-  Configuration file
+  Show this help message and exit.
+-H, --host
+  IP or Hostname.
+-p, --port
+  Listening Port.
+-c, --config
+  Configuration file.
 
 
 Example greenbalance.conf
