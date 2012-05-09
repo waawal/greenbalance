@@ -33,7 +33,7 @@ Get all commandline options by:
 Example greenbalance.conf
 -------------------------
 
-``greenbalance.conf`` is by default placed in ``/etc`` if the package was intalled with root privileges. If not you will have to create a configuration file manually and pass it with the ``--config`` or ``-c`` argument.
+``greenbalance.conf`` is by default placed in ``/etc`` if the package was intalled with root privileges. If you have the package installed in a virtualenv you will have to create a configuration file manually and pass it with the ``--config`` or ``-c`` argument.
 
 ::
 
@@ -49,7 +49,9 @@ Example greenbalance.conf
 Installation
 ============
 
-Install *greenbalance* with ``sudo pip install greenbalance`` or ``pip install greenbalance``
+*See blow for OS-specific preparations*
+
+Install *greenbalance* with ``sudo pip install greenbalance``
 
 Ubuntu
 ------
