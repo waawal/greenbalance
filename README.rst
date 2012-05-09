@@ -58,6 +58,7 @@ Install *greenbalance* with ``sudo pip install greenbalance``
 Ubuntu
 ------
 
+::
     sudo apt-get install python-pip python-gevent; sudo pip install --upgrade pip
 
 CentOS
