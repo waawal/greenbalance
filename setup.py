@@ -18,7 +18,7 @@ with open('README.rst') as file:
 setup(
     data_files = datafiles,
     name = 'greenbalance',
-    version = '0.0.3',
+    version = '0.1.0',
     url = 'https://github.com/waawal/greenbalance',
     description = 'Weighted Random Load Balancer for TCP.',
     long_description = long_description,

@@ -33,7 +33,7 @@ Get all commandline options by:
 Example greenbalance.conf
 -------------------------
 
-``greenbalance.conf`` is by default installed to ``/etc/greenbalance.conf``
+``greenbalance.conf`` is by default placed in ``/etc`` if intalled with root privileges, else you will find it in your home directory.
 
 ::
 
@@ -52,8 +52,7 @@ Installation
 * **Ubuntu:** ``sudo apt-get install python-pip python-gevent; sudo pip install --upgrade pip``
 * **CentOS:** Install ``python-pip`` and ``python-gevent`` from ``epel``.
 
-Install greenbalance with ``sudo pip install greenbalance``  
-*sudo is needed because the configuration file will be written to /etc*
+Install greenbalance with ``sudo pip install greenbalance`` or ``pip install greenbalance``
 
 Documentation
 -------------
