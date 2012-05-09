@@ -5,12 +5,16 @@ from distutils.core import setup
 
 homedir = os.path.expanduser('~')
 
+if os.access('/etc', os.W_OK):
+    conffile = ('/etc', ['greenbalance.conf'])
+else:
+    conffile = (homedir, ['greenbalance.conf'])
+
 with open('README.rst') as file:
     long_description = file.read()
 
 setup(
-    data_files = [('', ['README.rst']),
-                  ('/etc', ['greenbalance.conf']),],
+    data_files = [('', ['README.rst']), conffile],
     name = 'greenbalance',
     version = '0.0.3',
     url = 'https://github.com/waawal/greenbalance',
