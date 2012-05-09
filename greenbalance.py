@@ -46,7 +46,8 @@ class PortForwarder(StreamServer):
             dest.close()
 
 def start(source, destinations):
-    """ Registers signals and sets the gevent StreamServer to serve_forever.
+    """ Registers signals, instantiates and sets the gevent StreamServer
+        to serve_forever.
     """
     server = PortForwarder(source, destinations)
     gevent.signal(signal.SIGTERM, server.close)
