@@ -12,8 +12,6 @@ from gevent.socket import create_connection, gethostbyname
 
 import wr
 
-logging.basicConfig(level=logging.ERROR)
-
 class PortForwarder(StreamServer):
 
     def __init__(self, listener, destinations, **kwargs):
@@ -59,10 +57,12 @@ class PortForwarder(StreamServer):
             source.close()
             dest.close()
 
-def start(source=("0.0.0.0", 8080), destinations):
+def start(destinations, source=None):
     """ Registers signals, instantiates and sets the gevent StreamServer
         to serve_forever.
     """
+    if source == None:
+        source = ("0.0.0.0", 8080)
     server = PortForwarder(source, destinations)
     gevent.signal(signal.SIGTERM, server.close)
     gevent.signal(signal.SIGINT, server.close)
@@ -91,9 +91,10 @@ def read_config(host=None, port=None, conf=None, loglevel=None, logfile=None):
                   'error':logging.ERROR,
                   'critical':logging.CRITICAL}
         level = LEVELS.get(logginglevel, logging.NOTSET)
-        logging.basicConfig(level=level
         if filename:
-            logging.basicConfig(filename=filename)
+            logging.basicConfig(level=level, filename=filename)
+        else:
+            logging.basicConfig(level=level)
         
     parser = SafeConfigParser()
     parser.read(conf)
@@ -101,16 +102,18 @@ def read_config(host=None, port=None, conf=None, loglevel=None, logfile=None):
     for name, value in parser.items('nodes'):
         key = parse_adress(name)
         destinations[key] = int(value)
+    # TODO: Check first if avail! 
     if host == None:
         host = parser.get('settings', 'host') or "0.0.0.0"
     if port == None:
         port = int(parser.get('settings', 'port')) or 8080
     else:
         port = int(port)
-    if loglevel == None:
-        loglevel = parser.get('logging', 'loglevel') or None
-    if logfile == None:
-        parser.get('logging', 'logfile') or None
+    if parser.has_section('logging'):
+        if loglevel == None:
+            loglevel = parser.get('logging', 'loglevel')
+        if logfile == None:
+            logfile = parser.get('logging', 'logfile')
         
     # Setup logging
     if loglevel and logfile:
@@ -149,9 +152,9 @@ def process_arguments(argv=None):
                  help="Log Level (debug, info, warning, error, critical)",)
                  
     options, arguments = p.parse_args()
-    nodes, source = read_config(options.host, options.port,
+    destinations, source = read_config(options.host, options.port,
                                 options.conf, options.loglevel, options.logfile)
-    start(source, destinations)
+    start(source=source, destinations=destinations)
 
 if __name__ == '__main__':
     process_arguments(sys.argv)
