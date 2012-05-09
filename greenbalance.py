@@ -102,7 +102,7 @@ def process_arguments(argv=None):
                  default="/etc/greenbalance.conf",
                  help="Configuration file",)
     options, arguments = p.parse_args()
-    nodes, source = read_configoptions.host, options.port, options.conf)
+    nodes, source = read_config(options.host, options.port, options.conf)
     start(source, destinations)
 
 if __name__ == '__main__':
