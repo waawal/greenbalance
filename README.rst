@@ -51,7 +51,7 @@ greenbalance.conf
 Installation
 ============
 
-*See blow for OS-specific preparations.*
+*See below for OS-specific preparations.*
 
 Install *greenbalance* with:
 
