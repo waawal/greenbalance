@@ -4,12 +4,12 @@
     :target: http://www.flickr.com/photos/gorupka/2343360380/
 
 greenbalance
-=============
+============
 
 *greenbalance is a simple TCP load balancer with round-robin and weighted random support built on* ``gevent`` *and* ``wr``.
 
 Usage
------
+=====
 
 Simple example; this will make the load balancer listen on port 8080 and use a custom configuration.
 ::
@@ -33,7 +33,7 @@ Get all commandline options by:
 Example greenbalance.conf
 -------------------------
 
-``greenbalance.conf`` is by default placed in ``/etc`` if intalled with root privileges, else you will find it in your home directory.
+``greenbalance.conf`` is by default placed in ``/etc`` if the package was intalled with root privileges. If not you will have to create a configuration file manually and pass it with the ``--config`` or ``-c`` argument.
 
 ::
 
@@ -47,18 +47,25 @@ Example greenbalance.conf
     localhost 3103 = 40      # will serve 40% of the requests.
 
 Installation
-------------
+============
 
-* **Ubuntu:** ``sudo apt-get install python-pip python-gevent; sudo pip install --upgrade pip``
-* **CentOS:** Install ``python-pip`` and ``python-gevent`` from ``epel``.
+Install *greenbalance* with ``sudo pip install greenbalance`` or ``pip install greenbalance``
 
-Install greenbalance with ``sudo pip install greenbalance`` or ``pip install greenbalance``
+Ubuntu
+------
+
+``sudo apt-get install python-pip python-gevent; sudo pip install --upgrade pip``
+
+CentOS
+------
+
+Install ``python-pip`` and ``python-gevent`` from ``epel``.
 
 Documentation
--------------
+=============
 
 Documentation is available at `readthedocs.org <http://greenbalance.readthedocs.org/>`_
 
 License
--------
+=======
 `GPL <http://www.gnu.org/licenses/gpl-3.0.txt>`_
