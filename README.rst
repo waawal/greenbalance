@@ -32,7 +32,7 @@ Arguments accepted by the ``greenbalance`` command.
   Configuration file.
 
 
-Example greenbalance.conf
+greenbalance.conf
 -------------------------
 
 ``greenbalance.conf`` is by default placed in ``/etc`` if the package was intalled with root privileges. If you have the package installed in a virtualenv you will have to create a configuration file manually and pass it with the ``--config`` or ``-c`` argument.
