@@ -2,6 +2,7 @@
 
 import sys
 import signal
+import logging
 from optparse import OptionParser
 from ConfigParser import SafeConfigParser
 
@@ -66,7 +67,7 @@ def read_config(host=None, port=None, conf=None):
         the balancer.
     """
     def parse_address(address):
-        """ Pareses the hosts and ports in the conf file (splits on first space).
+        """ Pareses the hosts and ports in the conf file.
         """
         try:
             hostname, portnumber = address.rsplit(' ', 1)
@@ -75,6 +76,16 @@ def read_config(host=None, port=None, conf=None):
             sys.exit('Expected HOST PORT: %r' % address)
         return (gethostbyname(hostname), portnumber)
 
+    def setup_logging(logginglevel, filename):
+        LEVELS = { 'debug':logging.DEBUG,
+            'info':logging.INFO,
+            'warning':logging.WARNING,
+            'error':logging.ERROR,
+            'critical':logging.CRITICAL,
+            }
+        logging.basicConfig(filename=filename,
+                            level=LEVELS.get(logginglevel, logging.NOTSET))
+        
     parser = SafeConfigParser()
     parser.read(conf)
     destinations = {}
@@ -94,7 +105,7 @@ def process_arguments(argv=None):
     """ Executes when called from the commandline.
     """
     p = OptionParser(usage="usage: %prog [options] filename",
-                          version="%prog 0.1.0")
+                          version="%prog 0.2.0")
     p.add_option("-H", "--host",
                  dest="host",
                  default=None,
@@ -107,6 +118,7 @@ def process_arguments(argv=None):
                  dest="conf",
                  default="/etc/greenbalance.conf",
                  help="Configuration file",)
+                 
     options, arguments = p.parse_args()
     nodes, source = read_config(options.host, options.port, options.conf)
     start(source, destinations)
