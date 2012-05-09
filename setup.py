@@ -8,7 +8,7 @@ datafiles = [('', ['README.rst'])]
 homedir = os.path.expanduser('~')
 
 if os.access('/etc', os.W_OK) and not os.path.exists(os.path.join('/etc', 'greenbalance.conf')):
-    datafiles.append(('/etc', ['greenbalance.conf']))
+    datafiles.append(('/etc', ['conf/greenbalance.conf']))
 
 with open('README.rst') as file:
     long_description = file.read()

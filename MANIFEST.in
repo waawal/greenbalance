@@ -1,2 +1,3 @@
-include greenbalance.py setup.py README.rst greenbalance.conf
+include greenbalance.py setup.py README.rst
+include conf/greenbalance.conf
 include bin/greenbalance
