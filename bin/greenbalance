@@ -8,11 +8,11 @@ source_tree_greenbalance = join(dirname(__file__), "..", "greenbalance.py")
 if exists(source_tree_greenbalance):
     sys.path.insert(0, dirname(source_tree_greenbalance))
     try:
-        from greenbalance import main
+        from greenbalance import process_arguments
     finally:
         del sys.path[0]
 else:
-    from greenbalance import main
+    from greenbalance import process_arguments
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv))
+    sys.exit(process_arguments(sys.argv))

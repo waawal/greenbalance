@@ -19,68 +19,71 @@ class PortForwarder(StreamServer):
         self.destinations = destinations
 
     def handle(self, source, address):
-        dest = create_connection(self.dest)
-        forwarder = gevent.spawn(forward, source, dest)
-        backforwarder = gevent.spawn(forward, dest, source)
+        target = self.get_destination()
+        destination = create_connection(target)
+        forwarder = gevent.spawn(self.forward, source, destination)
+        backforwarder = gevent.spawn(self.forward, destination, source)
         gevent.joinall([forwarder, backforwarder])
 
     def close(self):
         StreamServer.close(self)
 
-    @property
-    def dest(self):
-        return parse_address(wr.choice(self.destinations))
+    def get_destination(self):
+        destination = wr.choice(self.destinations)
+        return destination
 
+    def forward(self, source, dest):
+        """ The Forwarding.
+        """
+        try:
+            while True:
+                data = source.recv(1024)
+                if not data:
+                    break
+                dest.sendall(data)
+        finally:
+            source.close()
+            dest.close()
 
-def forward(source, dest):
-    """ The Forwarding.
-    """
-    try:
-        while True:
-            data = source.recv(1024)
-            if not data:
-                break
-            dest.sendall(data)
-    finally:
-        source.close()
-        dest.close()
-
-def parse_address(address):
-    """ Pareses the hosts and ports in the conf file (splits on first space).
-    """
-    try:
-        hostname, port = address.rsplit(' ', 1)
-        port = int(port)
-    except ValueError:
-        sys.exit('Expected HOST PORT: %r' % address)
-    return gethostbyname(hostname), port
-
-def read_config(host=None, port=None, conf=None):
-    parser = SafeConfigParser()
-    parser.read(conf)
-    destinationsdict = {}
-    for name, value in parser.items('nodes'):
-        destinationsdict[name] = int(value)
-    if not host:
-        host = parser.get('settings', 'host')
-    if not port:
-        port = int(parser.get('settings', 'port'))
-    else:
-        port = int(port)
-    
-    return destinationsdict, (host, port)
-
-def start(host=None, port=None, conf=None):
+def start(source, destinations):
     """ Registers signals and sets the gevent StreamServer to serve_forever.
     """
-    nodes, source = read_config(host, port, conf)
-    server = PortForwarder(source, nodes)
+    server = PortForwarder(source, destinations)
     gevent.signal(signal.SIGTERM, server.close)
     gevent.signal(signal.SIGQUIT, server.close)
     gevent.signal(signal.SIGINT, server.close)
     server.serve_forever()
 
-def main(argv):
+def read_config(host=None, port=None, conf=None):
+    """ Reads the configuration file and prepares values for starting up
+        the balancer.
+    """
+    def parse_address(address):
+        """ Pareses the hosts and ports in the conf file (splits on first space).
+        """
+        try:
+            hostname, portnumber = address.rsplit(' ', 1)
+            portnumber = int(portnumber) # Has to be a INT
+        except ValueError:
+            sys.exit('Expected HOST PORT: %r' % address)
+        return (gethostbyname(hostname), portnumber)
+
+    parser = SafeConfigParser()
+    parser.read(conf)
+    destinations = {}
+    for name, value in parser.items('nodes'):
+        key = parse_adress(name)
+        destinations[key] = int(value)
+    if host == None:
+        host = parser.get('settings', 'host') or "0.0.0.0"
+    if port == None:
+        port = int(parser.get('settings', 'port')) or 8080
+    else:
+        port = int(port)
+    
+    return (destinations, (host, port))
+
+def process_arguments(argv=None):
     """ Executes when called from the commandline.
     """
     p = OptionParser(usage="usage: %prog [options] filename",
@@ -98,7 +101,8 @@ def main(argv):
                  default="/etc/greenbalance.conf",
                  help="Configuration file",)
     options, arguments = p.parse_args()
-    start(options.host, options.port, options.conf)
+    nodes, source = read_configoptions.host, options.port, options.conf)
+    start(source, destinations)
 
 if __name__ == '__main__':
-    main(sys.argv)
+    process_arguments(sys.argv)
