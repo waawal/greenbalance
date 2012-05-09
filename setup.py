@@ -1,20 +1,22 @@
 #!/usr/bin/python
 
 import os
+import os.path
 from distutils.core import setup
 
+datafiles = [('', ['README.rst'])]
 homedir = os.path.expanduser('~')
 
-if os.access('/etc', os.W_OK):
-    conffile = ('/etc', ['greenbalance.conf'])
-else:
-    conffile = (homedir, ['greenbalance.conf'])
+if os.access('/etc', os.W_OK) and not os.path.exists(os.path.join('/etc', 'greenbalance.conf')):
+    datafiles.append(('/etc', ['greenbalance.conf']))
+elif os.access(homedir, os.W_OK) and not os.path.exists(os.path.join(homedir, 'greenbalance.conf')):
+    datafiles.append((homedir, ['greenbalance.conf']))
 
 with open('README.rst') as file:
     long_description = file.read()
 
 setup(
-    data_files = [('', ['README.rst']), conffile],
+    data_files = datafiles,
     name = 'greenbalance',
     version = '0.0.3',
     url = 'https://github.com/waawal/greenbalance',
