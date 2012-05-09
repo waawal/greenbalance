@@ -33,7 +33,7 @@ Arguments accepted by the ``greenbalance`` command.
 
 
 greenbalance.conf
--------------------------
+-----------------
 
 ``greenbalance.conf`` is by default placed in ``/etc`` if the package was intalled with root privileges. If you have the package installed in a virtualenv you will have to create a configuration file manually and pass it with the ``--config`` or ``-c`` argument.
 
@@ -59,6 +59,7 @@ Ubuntu
 ------
 
 ::
+
     sudo apt-get install python-pip python-gevent; sudo pip install --upgrade pip
 
 CentOS
