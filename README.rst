@@ -16,18 +16,19 @@ Simple example; this will make the load balancer listen on port 8080 and use a c
 
     $ greenbalance --port 8080 --config /path/to/my.config
 
-Get all commandline options by:
-::
+Arguments
+---------
 
-    $ greenbalance -h
-    Usage: greenbalance [options] filename
-    
-    Options:
-      --version               Show program's version number and exit
-      -h, --help              Show this help message and exit
-      -H HOST, --host=HOST    IP or Hostname
-      -p PORT, --port=PORT    Listening Port
-      -c CONF, --config=CONF  Configuration file
+--version
+  Show program's version number and exit
+-h, --help
+  Show this help message and exit
+-H HOST, --host=HOST
+  IP or Hostname
+-p PORT, --port=PORT
+  Listening Port
+-c CONF, --config=CONF
+  Configuration file
 
 
 Example greenbalance.conf
@@ -49,7 +50,7 @@ Example greenbalance.conf
 Installation
 ============
 
-*See blow for OS-specific preparations*
+*See blow for OS-specific preparations.*
 
 Install *greenbalance* with ``sudo pip install greenbalance``
 
