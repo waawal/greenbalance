@@ -53,7 +53,11 @@ Installation
 
 *See blow for OS-specific preparations.*
 
-Install *greenbalance* with ``sudo pip install greenbalance``
+Install *greenbalance* with:
+
+::
+
+    sudo pip install greenbalance
 
 Ubuntu
 ------
