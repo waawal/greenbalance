@@ -20,13 +20,20 @@ class PortForwarder(StreamServer):
 
     def handle(self, source, address):
         target = self.get_destination()
-        destination = create_connection(target)
+        try:
+            destination = create_connection(target)
+        except IOError:
+            # TODO: Future implementation of health check.
+            return
         forwarder = gevent.spawn(self.forward, source, destination)
         backforwarder = gevent.spawn(self.forward, destination, source)
         gevent.joinall([forwarder, backforwarder])
 
     def close(self):
-        StreamServer.close(self)
+        if self.closed:
+            sys.exit('Multiple exit signals received - aborting.')
+        else:
+            StreamServer.close(self)
 
     def get_destination(self):
         destination = wr.choice(self.destinations)
@@ -51,7 +58,6 @@ def start(source=("0.0.0.0", 8080), destinations):
     """
     server = PortForwarder(source, destinations)
     gevent.signal(signal.SIGTERM, server.close)
-    gevent.signal(signal.SIGQUIT, server.close)
     gevent.signal(signal.SIGINT, server.close)
     server.serve_forever()
 
