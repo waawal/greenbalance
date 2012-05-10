@@ -30,6 +30,11 @@ Arguments accepted by the ``greenbalance`` command.
   Listening Port.
 -c, --config
   Configuration file.
+-l, --logfile
+  Log File
+-L, --loglevel
+  Log Level (debug, info, warning, error, critical)
+
 
 
 greenbalance.conf
@@ -42,6 +47,10 @@ greenbalance.conf
     [settings]
     host = 0.0.0.0           # Bind to this (0.0.0.0 = all)
     port = 3001              # Listening port.
+
+    [logging]
+    loglevel = debug
+    logfile = /var/log/greenbalance.log
 
     [nodes]
     backend1 3101 = 20       # will serve 20% of the requests.
