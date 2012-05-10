@@ -16,9 +16,9 @@ Simple example; this will make the load balancer listen on port 8080 and use a c
 
     $ greenbalance --port 8080 --config /path/to/my.config
 
-Arguments
+Options and Arguments
 ---------
-Arguments accepted by the ``greenbalance`` command.
+Options accepted by the ``greenbalance`` command.
 
 --version
   Show program's version number and exit.
