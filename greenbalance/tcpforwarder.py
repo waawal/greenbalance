@@ -65,6 +65,7 @@ def start(destinations, source=None):
     gevent.signal(signal.SIGINT, server.close)
     server.serve_forever()
 
+
 if __name__ == '__main__':
     import utils
     configuration = utils.process_arguments(sys.argv)
