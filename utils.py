@@ -5,6 +5,7 @@ from ConfigParser import SafeConfigParser
 
 def process_arguments(argv=None):
     """ Executes when called from the commandline.
+        returns (tuple of host and port, dict of destinations formatted for wr)
     """
     p = OptionParser(usage="usage: %prog [options] filename",
                           version="%prog 0.2.0")
@@ -32,7 +33,7 @@ def process_arguments(argv=None):
     options, arguments = p.parse_args()
     destinations, source = read_config(options.host, options.port,
                                 options.conf, options.loglevel, options.logfile)
-    start(source=source, destinations=destinations)
+    return(source, destinations)
 
 def read_config(host=None, port=None, conf=None, loglevel=None, logfile=None):
     """ Reads the configuration file and prepares values for starting up

@@ -67,4 +67,5 @@ def start(destinations, source=None):
 
 if __name__ == '__main__':
     import utils
-    utils.process_arguments(sys.argv)
+    configuration = utils.process_arguments(sys.argv)
+    start(configuration)
