@@ -1,5 +1,4 @@
 import sys
-import signal
 import logging
 from optparse import OptionParser
 from ConfigParser import SafeConfigParser
@@ -8,15 +7,12 @@ import gevent
 
 
 def start(server, destinations, source=None, distributor=None):
-    """ Registers signals, instantiates and sets the gevent StreamServer
-        to serve_forever.
+    """ Instantiates and sets to serve_forever.
     """
     if source == None:
         source = ("0.0.0.0", 8080)
     instance = server(listener=source, destinations=destinations,
                       distributor=distributor) # Fix default dist
-    gevent.signal(signal.SIGTERM, instance.close)
-    gevent.signal(signal.SIGINT, instance.close)
     instance.serve_forever()
 
 def read_config(host=None, port=None, conf=None, loglevel=None, logfile=None):
