@@ -25,9 +25,7 @@ setup(
     license = 'gpl',
     platforms = 'any',
     scripts=['bin/greenbalance'],
-    py_modules = [
-        'greenbalance'
-    ],
+    packages = ['greenbalance'],
     install_requires = [
         'wr',
         'gevent'
