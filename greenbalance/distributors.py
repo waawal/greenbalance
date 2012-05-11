@@ -1,3 +1,6 @@
+""" Distributors are iterables.
+"""
+
 try:
     from itertools import cycle
 except ImportError:
@@ -15,7 +18,8 @@ import wr
 
 
 def weighted_random(data):
-    return wr.choice(data)
+    while True:
+        yield wr.choice(data)
 
 def round_robin(data):
     return cycle(data)

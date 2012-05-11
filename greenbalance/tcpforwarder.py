@@ -1,23 +1,32 @@
 #!/usr/bin/python
 
 import sys
-import signal
+import functools
+import logging
 
 import gevent
-from gevent.server import StreamServer
+
 from gevent.socket import create_connection, gethostbyname
+
+import distributors
+from utils import start
+from base import BaseForwarder
 
 import wr
 
-class PortForwarder(StreamServer):
+class PortForwarder(BaseForwarder):
 
-    def __init__(self, listener, destinations, **kwargs):
-        StreamServer.__init__(self, listener, **kwargs)
-        self.destinations = destinations
+    def __init__(self, listener=None, destinations=None,
+                 distributor=distributors.round_robin, **kwargs):
+        if listener == None:
+            listener = ('0.0.0.0', 8080)
+        BaseForwarder.__init__(self, listener=listener,
+                               destinations=destinations,
+                               distributor=distributor, **kwargs)
         logging.debug('Starting up the port forwarder.')
 
     def handle(self, source, address):
-        target = self.get_destination()
+        target = self.get_destination.next()
         try:
             destination = create_connection(target)
         except IOError, ex:
@@ -26,20 +35,10 @@ class PortForwarder(StreamServer):
                           address[1], self.destination[0], self.destination[1],
                           ex))
             return
+        
         forwarder = gevent.spawn(self.forward, source, destination)
         backforwarder = gevent.spawn(self.forward, destination, source)
         gevent.joinall([forwarder, backforwarder])
-
-    def close(self):
-        if self.closed:
-            logging.critical('Multiple exit signals received - aborting.')
-            sys.exit('Multiple exit signals received - aborting.')
-        else:
-            StreamServer.close(self)
-
-    def get_destination(self):
-        destination = wr.choice(self.destinations)
-        return destination
 
     def forward(self, source, dest):
         """ The Forwarding.
@@ -54,19 +53,11 @@ class PortForwarder(StreamServer):
             source.close()
             dest.close()
 
-def start(destinations, source=None):
-    """ Registers signals, instantiates and sets the gevent StreamServer
-        to serve_forever.
-    """
-    if source == None:
-        source = ("0.0.0.0", 8080)
-    server = PortForwarder(source, destinations)
-    gevent.signal(signal.SIGTERM, server.close)
-    gevent.signal(signal.SIGINT, server.close)
-    server.serve_forever()
 
+start_server = functools.partial(start, PortForwarder,
+                                distributor=distributors.round_robin)
 
 if __name__ == '__main__':
     import utils
     configuration = utils.process_arguments(sys.argv)
-    start(configuration)
+    start_server(source=configuration[0], destinations=configuration[1])
