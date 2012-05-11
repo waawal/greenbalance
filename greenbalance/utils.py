@@ -1,39 +1,23 @@
 import sys
+import signal
 import logging
 from optparse import OptionParser
 from ConfigParser import SafeConfigParser
 
-def process_arguments(argv=None):
-    """ Executes when called from the commandline.
-        returns (tuple of host and port, dict of destinations formatted for wr)
+import gevent
+
+
+def start(server, destinations, source=None, distributor=None):
+    """ Registers signals, instantiates and sets the gevent StreamServer
+        to serve_forever.
     """
-    p = OptionParser(usage="usage: %prog [options] filename",
-                          version="%prog 0.2.0")
-    p.add_option("-H", "--host",
-                 dest="host",
-                 default=None,
-                 help="IP or Hostname")
-    p.add_option("-p", "--port",
-                 dest="port",
-                 default=None,
-                 help="Listening Port",)
-    p.add_option("-c", "--config",
-                 dest="conf",
-                 default="/etc/greenbalance.conf",
-                 help="Configuration File",)
-    p.add_option("-l", "--logfile",
-                 dest="logfile",
-                 default=None,
-                 help="Log File",)
-    p.add_option("-L", "--loglevel",
-                 dest="loglevel",
-                 default=None,
-                 help="Log Level (debug, info, warning, error, critical)",)
-                 
-    options, arguments = p.parse_args()
-    destinations, source = read_config(options.host, options.port,
-                                options.conf, options.loglevel, options.logfile)
-    return(source, destinations)
+    if source == None:
+        source = ("0.0.0.0", 8080)
+    instance = server(listener=source, destinations=destinations,
+                      distributor=distributor) # Fix default dist
+    gevent.signal(signal.SIGTERM, instance.close)
+    gevent.signal(signal.SIGINT, instance.close)
+    instance.serve_forever()
 
 def read_config(host=None, port=None, conf=None, loglevel=None, logfile=None):
     """ Reads the configuration file and prepares values for starting up
@@ -91,3 +75,36 @@ def read_config(host=None, port=None, conf=None, loglevel=None, logfile=None):
         setup_logging(filename=logfile)
     
     return (destinations, (host, port))
+
+def process_arguments(argv=None):
+    """ Executes when called from the commandline.
+        returns (tuple of host and port, dict of destinations formatted for wr)
+    """
+    p = OptionParser(usage="usage: %prog [options] filename",
+                          version="%prog 0.2.0")
+    p.add_option("-H", "--host",
+                 dest="host",
+                 default=None,
+                 help="IP or Hostname")
+    p.add_option("-p", "--port",
+                 dest="port",
+                 default=None,
+                 help="Listening Port",)
+    p.add_option("-c", "--config",
+                 dest="conf",
+                 default="/etc/greenbalance.conf",
+                 help="Configuration File",)
+    p.add_option("-l", "--logfile",
+                 dest="logfile",
+                 default=None,
+                 help="Log File",)
+    p.add_option("-L", "--loglevel",
+                 dest="loglevel",
+                 default=None,
+                 help="Log Level (debug, info, warning, error, critical)",)
+                 
+    options, arguments = p.parse_args()
+    destinations, source = read_config(options.host, options.port,
+                                options.conf, options.loglevel, options.logfile)
+    return(source, destinations)
+
