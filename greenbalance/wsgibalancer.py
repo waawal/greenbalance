@@ -39,7 +39,7 @@ class WSGIForwarder(BaseProxy):
     def serve_forever(self):
         self.server.serve_forever()
 
-        
+# Aliases & Shortcuts
 start_server = functools.partial(start, WSGIForwarder,
                                 distributor=distributors.weighted_random)
 
