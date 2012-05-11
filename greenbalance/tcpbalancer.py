@@ -1,4 +1,3 @@
-#!/usr/bin/python
 
 import sys
 import functools
@@ -53,11 +52,7 @@ class PortForwarder(BaseForwarder):
             source.close()
             dest.close()
 
-
+# Aliases & Shortcuts
 start_server = functools.partial(start, PortForwarder,
                                 distributor=distributors.round_robin)
 
-if __name__ == '__main__':
-    import utils
-    configuration = utils.process_arguments(sys.argv)
-    start_server(source=configuration[0], destinations=configuration[1])
